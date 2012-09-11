@@ -1,7 +1,11 @@
 function init(){
 	
+	
+	
+	
+	// Basic layout Elements
 	var content =$('#mainframe');
-	var header =$('topbanner');
+	var header =$('#topbanner');
 	var dataBox =$('#dataBox');
 	
 	/* views */
@@ -13,14 +17,16 @@ function init(){
 
 	/* load views and save for parsing */
 	dataBox.load('views.html',parseViews)
+//------------------------
+
+
 	
 	function parseViews(){
 		view_spot_object = $(this).find('#spot_object').clone();
 		view_add_form = $(this).find('#add_form').clone();
-		
 		clearDataBox();
 		
-		buildFirst();
+		buildFirst();	
 	}
 
 	function buildFirst(){
@@ -44,11 +50,9 @@ function init(){
 					console.log('first build failed');
 				}
 		content.html(dataBox.html());
+		
+	//----- start testing capabilities
 		checkAbilities();
-		$('img').click(function(){
-			navigator.camera.getPicture(onSuccess, onFail, { quality: 50, 
-	    	destinationType: Camera.DestinationType.FILE_URI }); 
-		});
 	}
 	function clearDataBox(){
 		dataBox.html('');
@@ -56,6 +60,12 @@ function init(){
 	function clearContentBox(){
 		content.html('');
 	}
+	
+	
+
+
+	
+	
 	
 //// -------------- TEST FUNCTIONS -------------------	
 	
@@ -67,9 +77,10 @@ function init(){
 		/// GeoLocation
 		if (navigator.geolocation) {
 		  var timeoutVal = 10 * 1000 * 1000;
+		  var failgeo = failCB('geolocation failed')
 		  navigator.geolocation.getCurrentPosition(
-		    displayPosition, 
-		    displayError,
+		    gelocation, 
+		    failgeo,
 		    { enableHighAccuracy: true, timeout: timeoutVal, maximumAge: 0 }
 		  );
 		}
@@ -78,8 +89,20 @@ function init(){
 		}
 		
 		
+		
+		var fail = failCB('OpenFileSystem')
+		window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFileSystemSuccess, fail);
+
 	}
-	function displayPosition(position) {
+// Fail MSG
+	var failCB = function (msg) {
+		    return function () {
+	         msgObj.append('[FAIL] ' + msg +'<br />');
+	  		}
+	 }
+	 
+//Geofunctions
+	function gelocation(position) {
 	 	msgObj.append(	'Latitude: '+ position.coords.latitude								+ '<br />' +
                         'Longitude: '          + position.coords.longitude             + '<br />' +
                         'Altitude: '           + position.coords.altitude              + '<br />' +
@@ -91,29 +114,49 @@ function init(){
                         );
 
 	}
-	function displayError(error) {
-	  var errors = { 
-	    1: 'Permission denied',
-	    2: 'Position unavailable',
-	    3: 'Request timeout'
-	  };	  
-	  navigator.notification.alert("Error: " + errors[error.code]);
-	}
 	
 	
-	// access filesystem
-    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFileSystemSuccess, fail);
-    
-
+// access filesystem
     function onFileSystemSuccess(fileSystem) {
        msgObj.append('Filesystem Name:'+ fileSystem.name + '<br />' +
        		'Filesystem Root:'+ fileSystem.root.name+ '<br />' );
+
+		// request file
+	    var fail = failCB('getFile');
+	    fs.root.getFile('henne.txt', {create: true, exclusive: false},
+	                    gotFileEntry, fail);
+	}
+	
+	var fileObj = null;
+	var fReader = null;
+	var fwriter = null;
+	
+	function gotFileEntry(fileEntry) {
+		var fail = failCB('Failed in creating writer');
+	    fileObj = fileEntry;
+		fileEntry.createWriter(gotFileWriter, fail);
+	}
+
+	function gotFileWriter(fileWriter) {
+	    fwriter = fileWriter;
+	    fwriter.onwriteend= function(){
+	    	readFile(fileObj);
+	    };
+	    fwriter.write('some Text that is soooo nice to read');
+	    msgObj.append('text was written <br />');
+	     
+	}
+	
+	function readFile(file) {
+        var reader = new FileReader();
+        reader.onloadend = function(evt) {
+            msgObj.append("Read as data URL <br />");
+            msgObj.append(evt.target.result);
+        };
+        reader.readAsDataURL(file);
     }
 
-    function fail(evt) {
-		msgObj.append('Filesystem Failed:'+'<br />' );
-    }
-	
+       
 	// Camera
 	
 	function onSuccess(imageURI) {
@@ -123,9 +166,33 @@ function init(){
 	
 	function onFail(message) {
 	    alert('Failed because: ' + message);
-}
+	}
+
+}	
 
 	
-};
-	
 
+///------- Create Object in JS
+	function daObj() {
+	    // Initialising code goes here:
+	    //alert( 'Loaded!' );
+	
+	    // ...
+	
+	    // Private properties/methods:
+	    var message = 'hello',
+        sayHello = function() {
+            alert(message);
+        };
+	
+	    // Public properties/methods:
+	    this.prop = function() {
+	        sayHello();
+	    };
+	
+	    // Encapsulation:
+	    this.setMessage = function(newMessage) {
+	        message = newMessage;
+	    };
+	}
+///- END ------ Create Object in JS
