@@ -171,8 +171,8 @@ a.glossy_button.green, .glossy_button.green{
 }
 	/*   ---List Item ---- */
 	.spot_list_object{
-		height:80px;
-		overflow:hidden;
+	/*	height:80px;
+	*/	overflow:hidden;
 		background:#e8e6e6;
 		border:1px solid #adacac;
 		border-left:0px;

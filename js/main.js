@@ -27,30 +27,7 @@ function init(){
 		var i= 0;
 		
 		var obj = null;
-		if (navigator.geolocation) {
-		  var timeoutVal = 10 * 1000 * 1000;
-		  navigator.geolocation.getCurrentPosition(
-		    displayPosition, 
-		    displayError,
-		    { enableHighAccuracy: true, timeout: timeoutVal, maximumAge: 0 }
-		  );
-		}
-		else {
-		  alert("Geolocation is not supported by this browser");
-		}
-		
-		function displayPosition(position) {
-		  alert("Latitude: " + position.coords.latitude + ", Longitude: " + position.coords.longitude);
-		}
-		function displayError(error) {
-		  var errors = { 
-		    1: 'Permission denied',
-		    2: 'Position unavailable',
-		    3: 'Request timeout'
-		  };
-		  alert("Error: " + errors[error.code]);
-		}
-		
+
 		try{
 
 			while(testData[i]){
@@ -67,6 +44,7 @@ function init(){
 					console.log('first build failed');
 				}
 		content.html(dataBox.html());
+		checkAbilities();
 	}
 	function clearDataBox(){
 		dataBox.html('');
@@ -74,6 +52,50 @@ function init(){
 	function clearContentBox(){
 		content.html('');
 	}
+	
+//// -------------- TEST FUNCTIONS -------------------	
+	
+	var msgObj = null;
+	
+	function checkAbilities(){
+		msgObj = $($('.spot_list_object')[0]);
+				
+		/// GeoLocation
+		if (navigator.geolocation) {
+		  var timeoutVal = 10 * 1000 * 1000;
+		  navigator.geolocation.getCurrentPosition(
+		    displayPosition, 
+		    displayError,
+		    { enableHighAccuracy: true, timeout: timeoutVal, maximumAge: 0 }
+		  );
+		}
+		else {
+		 msgObj.append("Geolocation is not supported by this browser");
+		}
+		
+		
+	}
+	function displayPosition(position) {
+		 msgObj.append(		'Latitude: '+ position.coords.latitude								+ '<br />' +
+                            'Longitude: '          + position.coords.longitude             + '<br />' +
+                            'Altitude: '           + position.coords.altitude              + '<br />' +
+                            'Accuracy: '           + position.coords.accuracy              + '<br />' +
+                            'Altitude Accuracy: '  + position.coords.altitudeAccuracy      + '<br />' +
+                            'Heading: '            + position.coords.heading               + '<br />' +
+                            'Speed: '              + position.coords.speed                 + '<br />' +
+                            'Timestamp: '          +                                   position.timestamp          + '<br />'
+                            );
+
+		}
+		function displayError(error) {
+		  var errors = { 
+		    1: 'Permission denied',
+		    2: 'Position unavailable',
+		    3: 'Request timeout'
+		  };	  
+		  navigator.notification.alert("Error: " + errors[error.code]);
+		}
+	
 };
 	
 
