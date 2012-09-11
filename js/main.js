@@ -123,7 +123,7 @@ function init(){
 
 		// request file
 	    var fail = failCB('getFile');
-	    fs.root.getFile('henne.txt', {create: true, exclusive: false},
+	    fileSystem.root.getFile('henne.txt', {create: true, exclusive: false},
 	                    gotFileEntry, fail);
 	}
 	
@@ -132,12 +132,14 @@ function init(){
 	var fwriter = null;
 	
 	function gotFileEntry(fileEntry) {
+		msgObj.append('Got File <br />');
 		var fail = failCB('Failed in creating writer');
 	    fileObj = fileEntry;
 		fileEntry.createWriter(gotFileWriter, fail);
 	}
 
 	function gotFileWriter(fileWriter) {
+		msgObj.append('start writing <br />');
 	    fwriter = fileWriter;
 	    fwriter.onwriteend= function(){
 	    	readFile(fileObj);
