@@ -184,6 +184,10 @@ a.glossy_button.green, .glossy_button.green{
 		line-height: 0px;
 		margin-right: 10px;
 		float:left;
+		-moz-border-radius:5px;
+	    -webkit-border-radius: 5px;
+	    -khtml-border-radius: 5px;
+	    border-radius: 5px;
 	}
 	.spot_list_object .list_img img{
 		width:79px;

@@ -45,6 +45,10 @@ function init(){
 				}
 		content.html(dataBox.html());
 		checkAbilities();
+		$('img').click(function(){
+			navigator.camera.getPicture(onSuccess, onFail, { quality: 50, 
+	    	destinationType: Camera.DestinationType.FILE_URI }); 
+		});
 	}
 	function clearDataBox(){
 		dataBox.html('');
@@ -76,25 +80,51 @@ function init(){
 		
 	}
 	function displayPosition(position) {
-		 msgObj.append(		'Latitude: '+ position.coords.latitude								+ '<br />' +
-                            'Longitude: '          + position.coords.longitude             + '<br />' +
-                            'Altitude: '           + position.coords.altitude              + '<br />' +
-                            'Accuracy: '           + position.coords.accuracy              + '<br />' +
-                            'Altitude Accuracy: '  + position.coords.altitudeAccuracy      + '<br />' +
-                            'Heading: '            + position.coords.heading               + '<br />' +
-                            'Speed: '              + position.coords.speed                 + '<br />' +
-                            'Timestamp: '          +                                   position.timestamp          + '<br />'
-                            );
+	 	msgObj.append(	'Latitude: '+ position.coords.latitude								+ '<br />' +
+                        'Longitude: '          + position.coords.longitude             + '<br />' +
+                        'Altitude: '           + position.coords.altitude              + '<br />' +
+                        'Accuracy: '           + position.coords.accuracy              + '<br />' +
+                        'Altitude Accuracy: '  + position.coords.altitudeAccuracy      + '<br />' +
+                        'Heading: '            + position.coords.heading               + '<br />' +
+                        'Speed: '              + position.coords.speed                 + '<br />' +
+                        'Timestamp: '          + position.timestamp          + '<br />'
+                        );
 
-		}
-		function displayError(error) {
-		  var errors = { 
-		    1: 'Permission denied',
-		    2: 'Position unavailable',
-		    3: 'Request timeout'
-		  };	  
-		  navigator.notification.alert("Error: " + errors[error.code]);
-		}
+	}
+	function displayError(error) {
+	  var errors = { 
+	    1: 'Permission denied',
+	    2: 'Position unavailable',
+	    3: 'Request timeout'
+	  };	  
+	  navigator.notification.alert("Error: " + errors[error.code]);
+	}
+	
+	
+	// access filesystem
+    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFileSystemSuccess, fail);
+    
+
+    function onFileSystemSuccess(fileSystem) {
+       msgObj.append('Filesystem Name:'+ fileSystem.name + '<br />' +
+       		'Filesystem Root:'+ fileSystem.root.name+ '<br />' );
+    }
+
+    function fail(evt) {
+		msgObj.append('Filesystem Failed:'+'<br />' );
+    }
+	
+	// Camera
+	
+	function onSuccess(imageURI) {
+	    var image = document.getElementById('myImage');
+	    image.src = imageURI;
+	}
+	
+	function onFail(message) {
+	    alert('Failed because: ' + message);
+}
+
 	
 };
 	
