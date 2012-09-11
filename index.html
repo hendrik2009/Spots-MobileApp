@@ -22,7 +22,6 @@ under the License.
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<meta name="format-detection" content="telephone=no" />
 		<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
-		<link rel="stylesheet" type="text/css" href="css/index.css" />
 		<link rel="stylesheet" type="text/css" href="css/mainstyle.css" />
 		<title>Hello World</title>
 	</head>
@@ -43,10 +42,7 @@ under the License.
 
 				<div id="deviceready">
 					<p class="status pending blink">
-						Connecting to Device
-					</p>
-					<p class="status complete blink hide">
-						Device is Ready
+						Connecting to device failed please restart...
 					</p>
 				</div>
 
@@ -67,7 +63,14 @@ under the License.
 		<script type="text/javascript" src="js/main.js"></script>
 		
 		<script type="text/javascript">
-			app.initialize();
+			var localdebug = false;
+			
+			if(localdebug){
+				$(document).ready(app.report('deviceready'));
+			}
+			else{
+				app.initialize();
+			}
 		</script>
 	</body>
 </html>
