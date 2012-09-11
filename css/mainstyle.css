@@ -1,0 +1,306 @@
+
+
+/*
+ * Content
+ * 
+ * 
+ * General / Resets
+ * Header
+ * Footer
+ * Mainframe
+ * 	List Object
+ *  Add Spot Form
+ * 
+ */
+
+
+/*   ---General Resets ---- */
+@font-face{ font-family:Spots; src:url('../Roswti__.ttf') }
+body,html{
+	padding:0;
+	margin:0;
+	border:0;
+	background:#FFFFFF;
+	color:#333333;
+}
+
+h1,h2,h3,h4,h5,h6{
+	font-weight:100;
+	margin:0px;
+	padding:0px;
+}
+a, a:link, a:hover, a:focus{
+	outline: 0px;
+	text-decoration:none;
+	color:#333333;
+}
+
+a.glossy_button, .glossy_button{
+	display:block;
+	font-family:Spots;
+	font-weight:100;
+	font-size: 26px;
+	letter-spacing: 1px;
+	color:#FFFFFF;
+	width:200px;
+	height:48px;
+	line-height:48px;
+	text-align:center;
+	background:transparent url('../img/spots_sprite.png') no-repeat scroll -100px 0px;
+}
+a.glossy_button.red, .glossy_button.red{
+	margin: 15px auto;
+	height:52px;
+	line-height:52px;
+	width:195px;
+	background-position: -150px -75px;
+}
+a.glossy_button.green, .glossy_button.green{
+	margin: 15px auto;
+	height:52px;
+	line-height:52px;
+	width:195px;
+	background-position: -150px -150px;
+}
+
+.left{
+	float:left;
+}
+.half{
+	width:50%;
+}
+.icon40{
+	display:inline-block;
+	width:40px;
+	height:40px;
+	background:transparent url('../img/spots_sprite.png') no-repeat scroll
+}
+.icon40.cam{
+	background-position: 5px -64px;
+}
+.icon40.img{
+	background-position: -45px -64px;
+}
+.icon40.map{
+	background-position: -95px -64px;
+}
+.icon30{
+	display:inline-block;
+	width:30px;
+	height:30px;
+	background:transparent url('../img/spots_sprite.png') no-repeat scroll;
+}
+.icon30.trash{
+	background-position: -44px -120px;
+}
+#dataBox{
+	display:none;
+}
+/*  END ---General Resets ---- */
+
+
+/*   ---Header ---- */
+#topbanner{
+	position:fixed;
+	top:0px;
+	width:100%;
+	height:60px;
+	background:#444444;
+	-moz-box-shadow: 3px 3px 4px rgba(0,0,0,0.3);
+	-webkit-box-shadow: 3px 3px 4px rgba(0,0,0,0.3);
+	box-shadow: 3px 3px 4px rgba(0,0,0,0.3);
+}
+#logo{
+	width:50px;
+	height:60px;
+	background:transparent url('../img/spots_sprite.png') no-repeat -50px 0px;
+	margin-left:20px;
+	float:left;
+}
+#header_title{
+	height:50px;
+	padding-top:10px;
+	font-family:Spots;
+	font-weight:100;
+	font-size:30px;
+	text-align:center;
+	letter-spacing:0.6px;
+	color:#FFFFFF;
+}
+#header_button{
+	width:60px;
+	height:60px;
+	float:right;
+}
+
+/*  END  ---Header---- */
+
+/*   ---Footer ---- */
+#closingbar{
+	position:fixed;
+	bottom:0px;
+	width:100%;
+	height:10px;
+	background:#444444;
+	-moz-box-shadow: 0px -3px 4px rgba(0,0,0,0.3);
+	-webkit-box-shadow: 0px -3px 4px rgba(0,0,0,0.3);
+	box-shadow: 0px -3px 4px rgba(0,0,0,0.3);
+}
+/*  END  ---Footer---- */
+
+
+/*   ---MainFrame ---- */
+#mainframe{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	margin-top:55px;
+}
+	/*   ---List Item ---- */
+	.spot_list_object{
+		height:80px;
+		overflow:hidden;
+		background:#e8e6e6;
+		border:1px solid #adacac;
+		border-left:0px;
+		border-right:0px;
+		padding: 15px;
+		margin: 10px 0;
+	}
+	.spot_list_object .list_img{
+		line-height: 0px;
+		margin-right: 10px;
+		float:left;
+	}
+	.spot_list_object .list_img img{
+		width:79px;
+		height:79px;
+		border:1px solid #adacac;
+		-moz-border-radius:5px;
+	    -webkit-border-radius: 5px;
+	    -khtml-border-radius: 5px;
+	    border-radius: 5px;
+	}
+	.spot_list_object .list_title{
+		font-size:21px;
+		height:25px;
+		margin-bottom:37px;
+	}
+	.spot_list_object .list_info{
+		
+	}
+	.spot_list_object  .list_tags{
+		color:#999999;
+		float:left;
+	}
+	.spot_list_object .list_date{
+		float:right;
+	}
+	/*   End---List Item ---- */
+	
+	/* Add Spot Form	 */
+		#add_form{
+			background: #e8e6e6;
+			padding:15px;
+			overflow:hidden;
+		}
+		#add_form .add_title_bar{
+			
+			padding: 15px 0px;
+		}
+		#add_form h2{
+			font-family:Spots;
+			font-size: 33px;
+			height:41px;
+			letter-spacing:0.4px;
+		}
+		#add_form .add_date{
+			height:16px;
+			font-size:12px;
+			color:#666666;
+			padding-top:18px;
+			float:right;
+		}
+		#add_form .input_container{
+			height:45px;
+			background:#FFFFFF;
+			padding: 0 10px;
+			margin-bottom:20px;
+			border:0; 
+			-moz-border-radius:5px;
+		    -webkit-border-radius: 5px;
+		    -khtml-border-radius: 5px;
+		    border-radius: 5px;
+		    -moz-box-shadow:inset 2px 2px 5px rgba(0,0,0,0.45);
+			-webkit-box-shadow:inset 2px 2px 5px rgba(0,0,0,0.45);
+			box-shadow:inset 2px 2px 5px rgba(0,0,0,0.45);
+		}
+		#add_form input{
+			height:45px;
+			line-height:45px;
+			font-size:28px;
+			width:100%;
+			background:transparent;
+			margin:0px;
+			padding:0;
+			border:0; 
+
+		}
+		#add_form .img_box{
+			overflow:hidden;
+			margin-bottom:20px;
+		}
+		#add_form .img_box_teaser{
+			float:left;
+			width:198px;
+			margin-right:15px;
+
+		}
+		#add_form .img_box img{
+			width:100%;
+			border:solid 1px #ADACAC;
+			-moz-border-radius:5px;
+		    -webkit-border-radius: 5px;
+		    -khtml-border-radius: 5px;
+		    border-radius: 5px;
+		}
+		#add_form .btn_box{
+			float:left;
+			width:200px;
+		}
+		#add_form .btn_box .glossy_button{
+			margin-bottom:27px;
+		}
+		#add_form .btn_box .glossy_button.last{
+			margin-bottom:0px;
+		}
+		#add_form .tag_edit{
+			margin-bottom:20px;
+		}
+		#add_form .tag_group {
+			padding-top:10px;
+			overflow:hidden;
+			margin-bottom:5px;
+		}
+		#add_form .tag_edit .input_container{
+			position:relative;
+		}
+		#add_form .tag_edit .input_container a{
+			position:absolute;
+			text-align:center;
+			color:#FFFFFF;
+			top:0px;
+			right:0px;
+			display:block;
+			font-family:Spots;
+			font-size: 26px;
+			height:45px;
+			line-height:48px;
+			width:88px;
+			float:right;
+			background:transparent url('../img/spots_sprite.png') no-repeat scroll 0px -175px;
+		}
+	
+	/*   End---- Add Spot Form ----*/
+
+
+/*  END   ---MainFrame ---- */

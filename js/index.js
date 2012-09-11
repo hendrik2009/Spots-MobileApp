@@ -31,7 +31,7 @@ var app = {
     report: function(id) {
         // Report the event in the console
         console.log("Report: " + id);
-
+		setTimeout('actor()', 1000);
         // Toggle the state from "pending" to "complete" for the reported ID.
         // Accomplished by adding .hide to the pending element and removing
         // .hide from the complete element.
