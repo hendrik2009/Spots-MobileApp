@@ -298,6 +298,10 @@ a.glossy_button.green, .glossy_button.green{
 			padding-top:10px;
 			overflow:hidden;
 			margin-bottom:5px;
+			min-height:30px;
+		}
+		#add_form .tag_group span {
+			color:#999999;
 		}
 		#add_form .tag_edit .input_container{
 			position:relative;

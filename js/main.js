@@ -84,13 +84,13 @@ function init(){
 				//exec script function
 				url = url.replace('!','');
 				var fn = window[url];
-				try{
+//				try{
 					fn.call();
-				}
+/*				}
 				catch(error){
 					console.log('Not existing function:'+url);
 				}	
-			}
+*/			}
 			else{
 				// its a view
 				clearDataBox();

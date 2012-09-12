@@ -10,7 +10,7 @@
 		</h2>
 	</div>
 	<div class="input_container">
-		<input name="spot_title" placeholder="Unnamed Spot - 2012-09-01" />
+		<input id="spot_title" name="spot_title" placeholder="Unnamed Spot - 2012-09-01" />
 	</div>	
 	<div class="img_box">
 		<div class="img_box_teaser">
@@ -27,18 +27,15 @@
 		<h2>TAGS</h2>
 		<a class="delete_tags icon30 trash left"></a>
 		<div class="tag_group">
-			<span>Bar, </span>
-			<span>Chill-out,</span>
-			<span>Dating</span>
 		</div>
 		<div class="input_container">
-			<input name="add_tag" placeholder="create new tag" /><a href="">ADD TAG</a>
+			<input id="add_tag" name="add_tag" placeholder="create new tag" /><a href="!addTag">ADD TAG</a>
 		</div>	
 	</div>
 	
 	<div class="main_button_group">
 		<div class="half left">
-			<a href="" class="main_cancel glossy_button red">CANCEL</a>
+			<a href="views/spotslist.html" class="main_cancel glossy_button red">CANCEL</a>
 		</div>
 		<div class="half left">
 			<a href="views/spotslist.html" class="main_confirm glossy_button green">ADD SPOTT</a>
@@ -47,13 +44,63 @@
 	<div id="scripter">
 	<script type="text/javascript">
 		$(document).bind('renderview',function(){
-			console.log('Render ADD');
+			console.log('Render ADD-Form');
+			
+			$('body, html').css('background-color','#E8E6E6');
 			content.append($('#add_form'));
+			
+			$('#add_tag').bind('keyup',checkTag);
+			$('#spot_title').bind('keyup',checkName);
+			
 			//last call
 			basicUi();
+			
 		})
 		function exitView(){
-			//alert('exit Add');
+			$('body, html').css('background-color','#ffffff');
+		}
+		function checkName(event){
+			var obj = null;
+			if(event){
+				if(event.keyCode == 13){
+					addTag();
+				}
+				obj = $(event.target);
+			}
+			else{
+				console.log(this);
+			}
+			var pattern = new RegExp('[^A-Za-z0-9_äÄöÖüÜß\\s\-]','g');
+			var text  = obj.val();
+			text 	= text.replace(pattern,'');
+			obj.val(text);
+			console.log(text);
+		}
+		function checkTag(event){
+			var obj = null;
+			if(event){
+				if(event.keyCode == 13){
+					addTag();
+				}
+				obj = $(event.target);
+			}
+			else{
+				console.log(this);
+			}
+			var pattern = new RegExp('[^A-Za-z0-9_äÄöÖüÜß\-]','g');
+			var text  = obj.val();
+			text 	= text.replace(pattern,'');
+			obj.val(text);
+			console.log(text);
+		}
+		function addTag(){
+			var e = jQuery.Event("click");
+			e.target=$('#add_tag').get();
+			
+			if( $('#add_tag').val() != '' ){
+				$('.tag_group').append('<span>'+$('#add_tag').val()+',</span>');
+				$('#add_tag').val('');
+			}
 		}
 	</script>
 </div>
