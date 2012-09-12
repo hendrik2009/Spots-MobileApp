@@ -1,111 +1,158 @@
-function init(){
-	
-	
-	
-	
-	// Basic layout Elements
-	var content =$('#mainframe');
-	var header =$('#topbanner');
-	var dataBox =$('#dataBox');
+
+
+//---------- Globals -----------------
+
+// Basic layout Elements
+	var content = $('#mainframe');
+	var header  = $('#topbanner');
+	var dataBox = $('#dataBox');
 	
 	// Filesystem
 	var fsystemOnline = false;
 	var froot = null;
 	var approot = null;
+
+
+
+function init(){
+	document.removeEventListener('deviceready', init, false);
 	
+	
+	
+	startApp();
+/*	
 	// setting up filesystem Contection
 	initFilesystem();
 	
-	// setting up geolocation
-    var geoOnline = false;
-
-
-	if(geoOnline && fsystemOnline){
+	
+	// Checking for ready to go
+	if(navigator.geolocation && fsystemOnline){
+		
+		// starting app
 		startApp();
 	}
 	else{
-		content.append('Starting App failed please restart')
+		content.append('Starting App failed please restart');
+		if(!navigator.geolocation){
+			content.append('-Geolocation is not available');
+		}
+		if(!fsystemOnline){
+			content.append('-Filesystem is not available');
+		}
 	}
-	
-	
-	
+*/	
+}	
 	function startApp(){
-		
+		console.log('was los?');
+		$('a').click(changeView);
 	}
 	
 //-- App is ready to go  --------------------------------------------------
 
 
-	function buildFirst(){
-		var i= 0;
-		
-		var obj = null;
-
-		try{
-
-			while(testData[i]){
-					obj = view_spot_object.clone();
-					
-					obj.find('.list_title').text(testData[i][0]);
-					
-					dataBox.append(obj.html());
-					
-					i++;
-				}
-			}
-		catch(error){
-					console.log('first build failed');
-				}
-		content.html(dataBox.html());
-		
-	//----- start testing capabilities
-		checkAbilities();
+	
+// Fail MSG
+	function failCB (msg) {
+		return function () {
+	    	content.append('[FAIL] ' + msg +'<br />');
+		}
 	}
+	
+	
+	
+	/*
+	* 			Viewcontrolers
+	* 
+	* 
+	*/
+	
+	function basicUi(){
+		$('a').click(changeView);
+	}
+	
+	function changeView(event){
+		
+		// kills standard behaviour
+		event.preventDefault();
+		var elem = (event.target) ? $(event.target) : $(event.srcElement);	
+		var url  = elem.attr('href');
+		
+		// parsing href to action
+		if(url!='' && url != null){
+			// there is an URL
+			if(url.indexOf('!')>=0){
+				//exec script function
+				url = url.replace('!','');
+				var fn = window[url];
+				try{
+					fn.call();
+				}
+				catch(error){
+					console.log('Not existing function:'+url);
+				}	
+			}
+			else{
+				// its a view
+				clearDataBox();
+				console.log('changeView to: '+url);
+				$(document).unbind();
+				try{
+					exitView();
+				}
+				catch(error){
+					console.log('No Exit View');
+				}	
+				dataBox.load(url,renderTrigger);	
+			}
+		}
+		else{
+			console.log('dead link');
+		}
+		
+		return false;
+	}
+	
+	function renderTrigger(){
+		clearTemplate();
+		$(document).trigger('renderview');
+	}
+	
+	// cleans the visible Template from all content
+	function clearTemplate(){
+		clearContentBox();
+		header.find('header_title').html('');
+		header.find('header_button').html('');
+	}
+	
+	// deletes all data in Databox
 	function clearDataBox(){
 		dataBox.html('');
 	}
+	// deletes all data in Contentbox
 	function clearContentBox(){
 		content.html('');
 	}
-	
-	
-
-
-	
-	
-	
-//// -------------- TEST FUNCTIONS -------------------	
-	
-
-	
-	function checkAbilities(){
-				
-		/// GeoLocation
-		if (navigator.geolocation) {
-		  var timeoutVal = 10 * 1000 * 1000;
-		  var failgeo = failCB('geolocation failed')
-		  navigator.geolocation.getCurrentPosition(
-		    gelocation, 
-		    failgeo,
-		    { enableHighAccuracy: true, timeout: timeoutVal, maximumAge: 0 }
-		  );
-		}
-		else {
-		}
-		
-		
-		
-		
-
-	}
-// Fail MSG
-	function failCB (msg) {
-		    return function () {
-	         content.append('[FAIL] ' + msg +'<br />');
-	  		}
-	 }
 	 
-//Geofunctions
+	 
+	 
+	 /*
+	 * 			Geolocation get current Location and provide formated
+	 * 
+	 * 
+	 */
+
+	// call geolocation
+	function callGeolocation(){
+		var timeoutVal = 10 * 1000 * 1000;
+		var fail = failCB('geolocation failed')
+		navigator.geolocation.getCurrentPosition(
+			gelocation, 
+			fail,
+			{ enableHighAccuracy: true, timeout: timeoutVal, maximumAge: 0 }
+		  );
+	}  
+	
+	// parse geodata
 	function gelocation(position) {
 	 /*	msgObj.append(	'Latitude: '+ position.coords.latitude								+ '<br />' +
                         'Longitude: '          + position.coords.longitude             + '<br />' +
@@ -116,10 +163,17 @@ function init(){
                         'Speed: '              + position.coords.speed                 + '<br />' +
                         'Timestamp: '          + position.timestamp          + '<br />'
                         );*/
-
 	}
 	
 	
+	
+	/*
+	 * 			File System functionality
+	 * 
+	 * 		For loading / saving data on local filesystem
+	 * 
+	 */
+
 //------------------ setting up filesystem Contection
     //try to get Root
     function initFilesystem() {
@@ -145,10 +199,12 @@ function init(){
 	//save appFolder and start first file-parsing
 	function goToSpotsDirectory(dirEntry){
 		//starting in root/applications/de.s1-e01.spots
+		fsystemOnline = true;
+		//save App Root
 		approot = dirEntry;
 		updateSpots();
 	}
-//---END ---------- setting up filesystem Contection	
+//--- END ---------- setting up filesystem Contection	
 	
 	
 // --- General Filesystem Functions
@@ -157,11 +213,26 @@ function init(){
 		var dirReader = approot.createReader();
 		var fail =failCB('Read de.s1-e01.spots Directory for parsing');
 		dirReader.readEntries(parseSpots,fail);
+		databox.trigger('spotsupdated');
 	}
 	//parse Spotfiles
 	function parseSpots(entries){
 	    var i;
 	    for (i=0; i<entries.length; i++) {
+	    	
+	    	
+	    	/*Todo 
+	    	 *Parse each file for 
+	    	 * Must haves:  Name
+	    	 * 				Timestamp
+	    	 * 				Long
+	    	 * 				Lat
+	    	 * 
+	    	 * Can Haves:	Icon Url
+	    	 * 				Tag[]
+	    	 * 				Adress/ additional info
+	    	 * 
+	    	 * */
 	        console.log(entries[i].name);
 	    }
 	    content.append('<br/>counted:'+i+'files');
@@ -201,7 +272,16 @@ function init(){
     }*/
 //--- END------------ General Filesystem Functions
        
-
+       
+       
+       
+       
+	/*
+	 * 			Camera
+	 * 
+	 * 		Provides adapter to camsystem and filedata of images
+	 * 
+	 */
 // Camera
 	
 	function onSuccess(imageURI) {
@@ -213,10 +293,25 @@ function init(){
 	    alert('Failed because: ' + message);
 	}
 
-}	
 
+	/*
+	 * 
+	 *  View functionallity
+	 * 
+	 */
+		function addSpot(){
+		alert('works');
+	}
 	
 
+
+
+	/*
+	 * 			Trash that could be usefull at one point 
+	 * 
+	 * 
+	 */
+	
 ///------- Create Object in JS
 	function daObj() {
 	    // Initialising code goes here:
