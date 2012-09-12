@@ -66,14 +66,14 @@ a.glossy_button.red, .glossy_button.red{
 	margin: 15px auto;
 	height:52px;
 	line-height:52px;
-	width:195px;
+	width:100px;
 	background-position: -150px -75px;
 }
 a.glossy_button.green, .glossy_button.green{
 	margin: 15px auto;
 	height:52px;
 	line-height:52px;
-	width:195px;
+	width:100px;
 	background-position: -150px -150px;
 }
 
