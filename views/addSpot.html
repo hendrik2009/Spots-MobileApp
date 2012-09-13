@@ -49,7 +49,7 @@
 			$('body, html').css('background-color','#E8E6E6');
 			content.append($('#add_form'));
 			
-			$('#add_tag').bind('keyup',checkTag);
+		//	$('#add_tag').bind('keyup',checkTag);
 			$('#spot_title').bind('keyup',checkName);
 			
 			//last call
@@ -60,6 +60,7 @@
 			$('body, html').css('background-color','#ffffff');
 		}
 		function checkName(event){
+			content.append('AA-');
 		/*	var obj = null;
 			if(event){
 				if(event.keyCode == 13){
