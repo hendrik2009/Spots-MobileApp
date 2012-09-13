@@ -49,7 +49,7 @@
 			$('body, html').css('background-color','#E8E6E6');
 			content.append($('#add_form'));
 			
-		//	$('#add_tag').bind('keyup',checkTag);
+			$('#add_tag').bind('keyup',checkTag);
 			$('#spot_title').bind('keyup',checkName);
 			
 			//last call
@@ -61,7 +61,7 @@
 		}
 		function checkName(event){
 			content.append('AA-');
-		/*	var obj = null;
+			var obj = null;
 			if(event){
 				if(event.keyCode == 13){
 					addTag();
@@ -75,10 +75,10 @@
 			var text  = obj.val();
 			text 	= text.replace(pattern,'');
 			obj.val(text);
-			console.log(text);*/
+			console.log(text);
 		}
 		function checkTag(event){
-	/*		var obj = null;
+			var obj = null;
 			if(event){
 				if(event.keyCode == 13){
 					addTag();
@@ -92,7 +92,7 @@
 			var text  = obj.val();
 			text 	= text.replace(pattern,'');
 			obj.val(text);
-			console.log(text);*/
+			console.log(text);
 		}
 		function addTag(){
 			var e = jQuery.Event("click");
