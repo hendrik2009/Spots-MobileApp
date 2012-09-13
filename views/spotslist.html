@@ -17,6 +17,16 @@
 		</div>
 	</div>
 </div>
+<div id="inputtester">
+	 <form>
+		First name: <input type="text" name="firstname" /><br />
+		Last name: <input type="text" name="lastname" />
+	</form> 
+	<form>
+		Password: <input type="password" name="pwd" />
+	</form> 
+	<textarea rows="2" cols="20"> At W3Schools you will find all the Web-building tutorials you need, from basic HTML to advanced XML, SQL, ASP, and PHP. </textarea>
+</div>
 
 <div id="scripter">
 	<script type="text/javascript">
@@ -25,7 +35,7 @@
 		
 		dataBox.bind('spotsupdated',renderSpots);
 		content.append('<div id="deviceready"><p class="status pending blink">Connecting to device failed please restart...</p><a href="views/spotslist.html">Der Knopf zur liste</a><a href="views/addSpot.html">Der Knopf zum ADD</a></div>');
-
+		content.append($('#inputtester'));
 		//last call
 		basicUi();
 	})
